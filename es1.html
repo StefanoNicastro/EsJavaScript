@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biglietti</title>
+</head>
+<body>
+
+    <h1>Prenotazione Biglietti</h1>
+    
+    <form id="Biglietti">
+
+        <table id="tabella">
+            <thead>
+                <tr>
+                    <th>Codice cliente</th>
+                    <th><input type="text" id="codice" name="codice" placeholder="Codice"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Numero biglietti</td>
+                    <td><input type="number" id="numeroBig" name="numeroBig" placeholder="Biglietti"></td>
+                </tr>
+
+                <tr>
+                    <td>Aggiungi prenotazione</td>
+                    <td><input type="button" id="bottonePrenot" onclick="aggiungiPren()"></td>
+                </tr>
+
+                <tr>
+                    <td>Mostra prenotazioni</td>
+                    <td><button id="mostraPrenot" nome="prova" onclick="mostraPren()" type="button">Mostra</button></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+        <p id="tabFinale"></p>
+        <h2>Tabella prenotazioni oltre i 200euro</h2>
+        <p id="tabSuper200"></p>
+
+    </form>
+
+</body>
+
+<script>
+
+    var tabella=`
+        <table>
+        <tr>
+            <th>Codice cliente</th>
+            <th>Numero biglietti</th>
+            <th>Totale</th>
+        </tr>
+
+        <tr>`
+    
+    var tabellaSup200=`
+        <table>
+        <tr>
+            <th>Codice cliente</th>
+            <th>Numero biglietti</th>
+            <th>Totale</th>
+        </tr>
+
+        <tr>`
+            
+    var codice=document.getElementById("codice").value
+    var nBig=parseInt(document.getElementById("numeroBig").value)
+    var costo
+    var arrayPren=[]
+    var super200=[]
+
+    function aggiungiPren(){
+
+        controlloCod()
+
+        const oggBig={
+            cod: codice,
+            nBigPren: nBig,
+            costoTot: costo
+        }
+
+        arrayPren.push(oggBig)
+
+        if(costo>200){
+            super200.push(oggBig)
+        }
+
+    }
+
+    function controlloCod(){
+        if(codice.length<=0){
+            alert("Inserire un numero valido di biglietti")
+        }else{
+            controlloNumBig()
+        }
+    }
+
+    function controlloNumBig(){
+        if(nBig<=0 ){
+            alert("Codice inserito non valido")
+        }else{
+            costo=nBig*20
+            if(nBig>4 && nBig<10){
+                costo-=costo*0.10
+            }
+            else if(nBig>9){
+                costo-=costo*0.20
+            }
+        }
+    }
+
+    function mostraPren(){
+            for(ogg of arrayPren){
+                console.log(arrayPren[i].cod+" "+arrayPren[i].nBigPren+" "+arrayPren[i].costoTot)
+                table+=`<th>${arrayPren[i].cod}</th>
+                <th>${arrayPren[i].nBigPren}</th>
+                <th>${arrayPren[i].costoTot}</th>`
+            }
+        tabella+=`</tr></table>`
+        document.getElementById("tabFinale").innerHTML=tabella
+        
+    }
+</script>
+
+</html>
